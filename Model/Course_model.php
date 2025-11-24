@@ -59,5 +59,17 @@ class Course_model
         $stmt->bind_param("sssi", $Lesson_title, $Lesson_content, $Lesson_video_url, $lessons_Update_id);
          return $stmt->execute();
     }
+    // start end lesson
+    
+    // Stat the enroll course
+
+    public function EnrollCourse($course_id, $student_id)
+    {
+        $Enroll_Course = "INSERT INTO enrollments(course_id,student_id)VALUES(?,?)";
+        $stmt = $this->conn->prepare($Enroll_Course);
+        $stmt->bind_param("ii", $course_id, $student_id);
+        return $stmt->execute();
+    }
+    
+    // End the enroll course
 }
-// start end

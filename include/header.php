@@ -82,7 +82,6 @@
                         <i class="fas fa-fw fa-user"></i>
                         <span>Buy Course </span></a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link" href="Buy_history.php">
                         <i class="fas fa-fw fa-user"></i>

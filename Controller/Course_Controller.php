@@ -34,9 +34,10 @@ if (isset($_POST['Update_title'])) {
     $Update_price = $_POST['Update_price'];
     $Update_Course = new Course_model();
     if ($Update_Course->UpdateCourse($update_id, $Update_title, $Update_description, $Update_price)) {
-        header("Location: http://localhost/madadali_LMS/View/MYCourse.php?Update_id");
+        header("Location: http://localhost/madadali_LMS/View/MYCourse.php?update=success");
         exit;
     } else {
-        echo "Course update Failed!";
+        header("Location: http://localhost/madadali_LMS/View/MYCourse.php?update=error");
+        exit;
     }
 }
