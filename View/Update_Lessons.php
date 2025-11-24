@@ -25,7 +25,7 @@ if (isset($_GET["lessons_Update_id"])) {
         $Lesson_video_url = $_POST['Lesson_video_url'];
         $lessons_Update = new Course_model();
         if ($lessons_Update->updatelesson($Lesson_title, $Lesson_content, $Lesson_video_url, $lessons_Update_id)) {
-            $update_success = true; 
+            $update_success = true;
         }
     }
 }
@@ -57,16 +57,16 @@ include __DIR__ . "/../include/header.php";
 </div>
 
 <?php if ($update_success) : ?>
-<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-<script>
-    Swal.fire({
-        title: "Good job!",
-        text: "Lesson updated successfully!",
-        icon: "success"
-    }).then(() => {
-        window.location.href = "MYCourse.php";
-    });
-</script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        Swal.fire({
+            title: "Good job!",
+            text: "Lesson updated successfully!",
+            icon: "success"
+        }).then(() => {
+            window.location.href = "playLIst.php?id=<?= $_SESSION['playList']; ?>";
+        });
+    </script>
 <?php endif; ?>
 
 <?php

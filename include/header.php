@@ -88,11 +88,6 @@
                         <i class="fas fa-fw fa-user"></i>
                         <span>Buy history </span></a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="View_Course.php">
-                        <i class="fas fa-fw fa-user"></i>
-                        <span>View Course</span></a>
-                </li>
             <?php
             }
             ?>

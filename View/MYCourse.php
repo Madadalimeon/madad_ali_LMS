@@ -10,55 +10,96 @@ $login_id = $_SESSION['user_id'];
 ?>
 
 <div class="d-sm-flex align-items-center justify-content-between mb-4 offset">
-    <a href="Course_add.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm offset-10"><i
-            class="fas fa-user fa-sm text-white-50"></i>Course Add</a>
+    <a href="Course_add.php" class="btn btn-primary btn-sm shadow-sm offset-10">
+        <i class="fas fa-user fa-sm text-white-50"></i> Course Add
+    </a>
 </div>
+
 <div class="container mt-4">
     <h3 class="mb-4">Your Courses</h3>
-    <div class="row g-4">
 
-        <?php
-        $database = new Database();
-        $conn = $database->getDB();
-        $query = "SELECT * FROM courses WHERE  instructor_id = ?";
-        $stmt = $conn->prepare($query);
-        $stmt->bind_param("i", $login_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
+    <table class="table table-bordered table-striped table-hover">
+        <thead class="">
+            <tr>
+                <th>#</th>
+                <th>Title</th>
+                <th>Status</th>
+                <th>Description</th>
+                <th>Price</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
 
-        while ($row = $result->fetch_assoc()):
-            if ($row["status"] == "Approve") {
+        <tbody>
+            <?php
+            $database = new Database();
+            $conn = $database->getDB();
+            $query = "SELECT * FROM courses WHERE instructor_id = ?";
+            $stmt = $conn->prepare($query);
+            $stmt->bind_param("i", $login_id);
+            $stmt->execute();
+            $result = $stmt->get_result();
+            $i = 1;
 
-        ?>
+            while ($row = $result->fetch_assoc()):
+            ?>
+                <tr>
+                    <td><?php echo $i++; ?></td>
+                    <td><?php echo $row['title']; ?></td>
 
-                <div class="col-lg-4 col-md-6 col-sm-12 mb-5">
-                    <div class="card shadow-sm border-0 h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $row['title']; ?></h5>
-                            <p class="card-text" style="height: 70px; overflow: hidden;"><?php echo $row['description']; ?></p>
-                            <p class="card-text fw-bold text-success mb-2">
-                                $. <?php echo $row['price']; ?>
-                            </p>
-                            <a href="playList.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm">View Playlist</a>
-                            <a href="Course_lessons.php?id=<?php echo $row['id']; ?>" class="btn btn-success btn-sm">Add Lesson</a>
-                            <a href="./../Controller/Course_Controller.php?Delete_id=<?php echo $row['id'] ?>" class="btn btn-danger text-white btn-sm">Delete</a>
-                            <a href="Course_Update.php?update_id=<?php echo $row['id'] ?>" class="btn btn-primary text-white btn-sm mt-2">Update</a>
-                        </div>
-                    </div>
-                </div>
-        <?php
-            }
-        endwhile; ?>
-    </div>
+                    <td class="<?php echo ($row['status'] == 'Approve') ? 'text-success fw-bold' : 'text-info fw-bold'; ?>">
+                        <?php echo $row['status']; ?>
+                    </td>
+
+                    <td style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
+                        <?php echo $row['description']; ?>
+                    </td>
+
+                    <td class="text-success fw-bold">
+                        $. <?php echo $row['price']; ?>
+                    </td>
+
+                    <td>
+                        <?php if ($row["status"] == "Approve"): ?>
+                            <a href="playList.php?id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm mb-1">View Playlist</a>
+                            <a href="Course_lessons.php?id=<?php echo $_SESSION['id'] = $row['id']; ?>" class="btn btn-success btn-sm mb-1">Add Lesson</a>
+                            <a href="./../Controller/Course_Controller.php?Delete_id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm mb-1">Delete</a>
+                            <a href="Course_Update.php?update_id=<?php echo $row['id']; ?>" class="btn btn-info text-white btn-sm mb-1">Update</a>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endwhile; ?>
+        </tbody>
+    </table>
 </div>
-<?php if (isset($_GET['Delete_id'])) { ?>
+
+<?php if (isset($_GET['add']) && $_GET['add'] == 'success'): ?>
     <script>
         Swal.fire({
-            title: "Courses Delete",
+            title: "Course Added!",
+            icon: "success",
+            text: "Your course has been added successfully!"
+        });
+    </script>
+<?php endif; ?>
+
+<?php if (isset($_GET['update']) && $_GET['update'] == 'success'): ?>
+    <script>
+        Swal.fire({
+            title: "Good job!",
+            text: "Your course is updated now!",
             icon: "success"
         });
     </script>
-<?php
-}
-include  __DIR__ . "/../include/footer.php";
-?>
+<?php endif; ?>
+
+<?php if (isset($_GET['Delete_id'])): ?>
+    <script>
+        Swal.fire({
+            title: "Course Deleted",
+            icon: "success"
+        });
+    </script>
+<?php endif; ?>
+
+<?php include  __DIR__ . "/../include/footer.php"; ?>

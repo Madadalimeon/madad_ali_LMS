@@ -9,6 +9,7 @@
             $id = intval($_GET['id']);
         }
 
+        
         if ($_SERVER['REQUEST_METHOD'] === "POST") {
             $course_id = intval($_POST["course_id"]);
             $title = $_POST["title"];
@@ -16,6 +17,8 @@
             $video_url = $_POST["video_url"];
             $lessons = new  Course_model();
             if ($lessons->Addlesson($course_id, $title, $content, $video_url)) {
+                header("location: http://localhost/madadali_LMS/View/playList.php?id=$id" );
+                exit;
             }
         }
         include  __DIR__ . "/../include/header.php";
@@ -25,7 +28,7 @@
             <div class="row justify-content-center">
                 <div class="col-md-6">
                     <h3 class="mb-3">Add Lesson</h3>
-                    <form action="" method="POST" enctype="multipart/form-data">
+                    <form method="POST" enctype="multipart/form-data">
                         <div class="mb-3">
                             <input type="hidden" name="course_id" value="<?php echo $id; ?>" class="form-control" placeholder="Enter Course ID" required>
                         </div>
@@ -46,16 +49,6 @@
                 </div>
             </div>
         </div>
-        <?php if (isset($_POST['title']) == "submit" ) { ?>
-            <script>
-                Swal.fire({
-                    title: "Good job!",
-                    text: "Add lessons successfull",
-                    icon: "success"
-                });
-            </script>
-
         <?php
-        }
         include  __DIR__ . "/../include/footer.php";
         ?>

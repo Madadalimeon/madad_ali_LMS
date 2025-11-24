@@ -4,56 +4,83 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
     header("Location: http://localhost/madadali_LMS/View/login.php");
     exit;
 }
-include  __DIR__ . "/../include/header.php";
 include __DIR__ . "/../Config/Config.php";
-
-
+include  __DIR__ . "/../include/header.php";
 ?>
-<div class="container mt-4">
-    <h3 class="mb-4">Your Courses</h3>
-    <div class="row g-4">
+<!-- Begin Page Content -->
+<div class="container-fluid">
 
-        <?php
-        $database = new Database();
-        $conn = $database->getDB();
-        $query = "SELECT * FROM courses ";
-        $stmt = $conn->prepare($query);
-        $stmt->execute();
-        $result = $stmt->get_result();
-        $hash = false;
-        while ($row = $result->fetch_assoc()):
-            if ($row["status"] == "Pending") {
-                $hash = true;
-        ?>
-                <div class="col-lg-4 col-md-6 col-sm-12 mb-5">
-                    <div class="card shadow-sm border-0 h-100">
-                        <div class="card-body">
-                            <h5 class="card-title"><?php echo $row['title']; ?></h5>
-                            <p class="card-text" style="height: 70px; overflow: hidden;">
-                                <?php echo $row['description']; ?>
-                            </p>
-                            <a href="./../Controller/approve_reject.php?approve_id=<?php echo $row['id']; ?>" class="btn btn-primary btn-sm">
-                                Approve
-                            </a>
-                            <a href="./../Controller/approve_reject.php?reject_id=<?php echo $row['id']; ?>" class="btn btn-danger btn-sm">
-                                Reject
-                            </a>
+    <!-- Page Heading -->
+    <h1 class="h3 mb-2 text-gray-800">Tables Register_User </h1>
 
-                        </div>
-                    </div>
-                </div>
+    <!-- DataTales Example -->
+    <div class="card shadow mb-4">
+        <div class="card-header py-3">
+            <h6 class="m-0 font-weight-bold text-primary">Users</h6>
+        </div>
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                        <tr>
+                            <th>id</th>
+                            <th>name</th>
+                            <th>email</th>
+                            <th>role</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <?php
+                        $database  = new Database();
+                        $conn = $database->getDB();
+                        $query = "SELECT 
+                    u.id AS user_id,
+                    u.name AS instructor_name,
+                    u.email,
+                    u.role,
+                    c.id AS course_id,
+                    c.title,
+                    c.description,
+                    c.instructor_id,
+                    c.price,
+                    c.status
+                  FROM users u
+                  JOIN courses c 
+                    ON c.instructor_id = u.id
+                  WHERE u.role = 'instructor'";
+                        $stmt = $conn->prepare($query);
+                        $stmt->execute();
+                        $result = $stmt->get_result();
+                        while ($row = $result->fetch_assoc()) :
+                              if ($row["status"] == "Pending"):
+                        ?>
+                            <tr>
+                                <td><?php echo $row['user_id']; ?></td>
+                                <td><?php echo $row['title']; ?></td>
+                                <td><?php echo $row['instructor_name']; ?></td>
+                                <td><?php echo $row['description']; ?></td>
+                                <td>
+                                    <a href="./../Controller/approve_reject.php?approve_id=<?php echo $row['course_id']; ?>" class="btn btn-primary btn-sm">Approve</a>
+                                    <a href="./../Controller/approve_reject.php?reject_id=<?php echo $row['course_id']; ?>" class="btn btn-danger btn-sm">Reject</a>
+                                </td>
 
-        <?php
-            }
-        endwhile;
-        if (!$hash) {
-            echo '<h4 class="offset-5 text-muted center mt-5" >No Pending Courses</h4>';
-        }
-        ?>
+                            <?php
+                            endif;
+                        endwhile;
+                            ?>
+                            </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
     </div>
-</div>
 
-<br><br><br><br><br><br><br><br><br><br><br><br><br>
+</div>
+<!-- /.container-fluid -->
+
+</div>
+<!-- End of Main Content -->
 <?php
 include  __DIR__ . "/../include/footer.php";
 ?>
