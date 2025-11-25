@@ -59,11 +59,15 @@
                         <i class="fas fa-fw fa-user"></i>
                         <span>Users</span></a>
                 </li>
-
                 <li class="nav-item">
                     <a class="nav-link" href="Approve.php">
                         <i class="fas fa-fw fa-x"></i>
                         <span>Approve / Reject </span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="Enrollment.php">
+                        <i class="fa-solid fa-person"></i>
+                        <span>Enrollment</span></a>
                 </li>
             <?php
             } elseif ($_SESSION["role"] == "instructor") {
