@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "student") {
+if (!isset($_SESSION["role"])) {
     header("Location: http://localhost/madadali_LMS/View/login.php");
     exit;
 }
@@ -19,14 +19,19 @@ $query = "SELECT
             c.title,
             c.description,
             c.price AS course_price,
-            c.status
-          FROM users u
-          JOIN courses c ON c.instructor_id = u.id
+            c.status,
+            en.id AS enroll_id,
+            en.enroll AS enroll_roll
+          FROM courses c
+          JOIN users u ON c.instructor_id = u.id
+          LEFT JOIN enrollments en ON en.course_id = c.id AND en.student_id = ?
           WHERE c.status = 'Approve'";
 
 $stmt = $conn->prepare($query);
+$stmt->bind_param("i", $_SESSION["student_id"]);
 $stmt->execute();
 $result = $stmt->get_result();
+
 ?>
 
 <div class="container mt-4">
@@ -34,6 +39,7 @@ $result = $stmt->get_result();
     <div class="row g-4">
 
         <?php while ($row = $result->fetch_assoc()): ?>
+
             <div class="col-lg-4 col-md-6 col-sm-12 mb-5">
                 <div class="card shadow-sm border-0 h-100">
 
@@ -51,14 +57,13 @@ $result = $stmt->get_result();
                             <?php echo $row['description']; ?>
                         </p>
 
-                        <?php 
-                        if (isset($_GET["enroll_id"]) && $_GET["enroll_id"] === "success") { ?>                            
+
+                        <?php if ($row["enroll_roll"] == "enroll") { ?>
                             <a href="View_Course.php?View_id=<?php echo $row['course_id']; ?>"
-                               class="btn btn-info w-100 btn-sm mt-3">
-                               View Course
+                                class="btn btn-info w-100 btn-sm mt-3">
+                                View Course
                             </a>
-                        <?php } 
-                        elseif (!isset($_GET["enroll_id"])) { ?>
+                        <?php  } else { ?>
 
                             <form method="post" action="./../Controller/Enroll_Controller.php">
                                 <input type="hidden" name="course_id" value="<?php echo $row["course_id"]; ?>">

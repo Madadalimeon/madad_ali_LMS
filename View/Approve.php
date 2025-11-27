@@ -7,13 +7,8 @@ if (!isset($_SESSION["role"]) || $_SESSION["role"] !== "admin") {
 include __DIR__ . "/../Config/Config.php";
 include  __DIR__ . "/../include/header.php";
 ?>
-<!-- Begin Page Content -->
 <div class="container-fluid">
-
-    <!-- Page Heading -->
-    <h1 class="h3 mb-2 text-gray-800">Tables Register_User </h1>
-
-    <!-- DataTales Example -->
+    <h1 class="h3 mb-2 text-gray-800">Tables Approve and Reject </h1>
     <div class="card shadow mb-4">
         <div class="card-header py-3">
             <h6 class="m-0 font-weight-bold text-primary">Users</h6>
@@ -53,34 +48,30 @@ include  __DIR__ . "/../include/header.php";
                         $stmt->execute();
                         $result = $stmt->get_result();
                         while ($row = $result->fetch_assoc()) :
-                              if ($row["status"] == "Pending"):
+                            if ($row["status"] == "Pending"):
                         ?>
-                            <tr>
-                                <td><?php echo $row['user_id']; ?></td>
-                                <td><?php echo $row['title']; ?></td>
-                                <td><?php echo $row['instructor_name']; ?></td>
-                                <td><?php echo $row['description']; ?></td>
-                                <td>
-                                    <a href="./../Controller/approve_reject.php?approve_id=<?php echo $row['course_id']; ?>" class="btn btn-primary btn-sm">Approve</a>
-                                    <a href="./../Controller/approve_reject.php?reject_id=<?php echo $row['course_id']; ?>" class="btn btn-danger btn-sm">Reject</a>
-                                </td>
+                                <tr>
+                                    <td><?php echo $row['user_id']; ?></td>
+                                    <td><?php echo $row['title']; ?></td>
+                                    <td><?php echo $row['instructor_name']; ?></td>
+                                    <td><?php echo $row['description']; ?></td>
+                                    <td>
+                                        <a href="./../Controller/approve_reject.php?approve_id=<?php echo $row['course_id']; ?>" class="btn btn-primary btn-sm">Approve</a>
+                                        <a href="./../Controller/approve_reject.php?reject_id=<?php echo $row['course_id']; ?>" class="btn btn-danger btn-sm">Reject</a>
+                                    </td>
 
                             <?php
                             endif;
                         endwhile;
                             ?>
-                            </tr>
+                                </tr>
                     </tbody>
                 </table>
             </div>
         </div>
     </div>
-
 </div>
-<!-- /.container-fluid -->
-
 </div>
-<!-- End of Main Content -->
 <?php
 include  __DIR__ . "/../include/footer.php";
 ?>

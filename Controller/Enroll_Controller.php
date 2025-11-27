@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($success) {
         $_SESSION["enroll_success"] = true;
-        header("Location: ../View/Buy_Course.php?enroll_id=success&course_id=" . $course_id);
+        header("Location: ../View/Buy_Course.php?enroll_id=success");
         exit();
     } else {
         echo "Enrollment failed.";

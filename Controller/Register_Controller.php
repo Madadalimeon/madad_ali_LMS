@@ -10,8 +10,7 @@ if ($_SERVER['REQUEST_METHOD'] === "POST"  ) {
     if ($User->Register()) {
         header("Location: http://localhost/madadali_LMS/View/tables.php");
         exit;
-    } else {
-        echo "Registration Failed!";
+      echo "Registration Failed!";
     }
 }
 

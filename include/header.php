@@ -77,7 +77,6 @@
                         <i class="fa-solid fa-person-chalkboard"></i>
                         <span>My Course</span></a>
                 </li>
-
             <?php
             } elseif ($_SESSION["role"] == "student") {
             ?>
