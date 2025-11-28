@@ -54,7 +54,7 @@ include  __DIR__ . "/../include/header.php";
                                     <td><?php echo $row['user_id']; ?></td>
                                     <td><?php echo $row['title']; ?></td>
                                     <td><?php echo $row['instructor_name']; ?></td>
-                                    <td><?php echo $row['description']; ?></td>
+                                    <td style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?php echo $row['description']; ?></td>
                                     <td>
                                         <a href="./../Controller/approve_reject.php?approve_id=<?php echo $row['course_id']; ?>" class="btn btn-primary btn-sm">Approve</a>
                                         <a href="./../Controller/approve_reject.php?reject_id=<?php echo $row['course_id']; ?>" class="btn btn-danger btn-sm">Reject</a>

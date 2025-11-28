@@ -1,5 +1,4 @@
 <?php
-session_start();
 include __DIR__ . "/../Model/Course_model.php";
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -12,8 +11,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($success) {
         $_SESSION["enroll_success"] = true;
-        header("Location: ../View/Buy_Course.php?enroll_id=success");
-        exit();
+        header("Location: ../View/Buy_Course.php?enroll_id=$course_id");
     } else {
         echo "Enrollment failed.";
     }

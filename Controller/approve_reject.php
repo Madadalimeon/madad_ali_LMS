@@ -1,4 +1,5 @@
 <?php
+session_start();
 include __DIR__ . "/../Config/Config.php";
 $database = new Database();
 $conn = $database->getDB();
@@ -24,16 +25,15 @@ if (isset($_GET['reject_id'])) {
 }
 
 
-// start the Eroll course
+// start the Eroll coursez
 if (isset($_GET['Enroll_id'])) {
     $enroll_id = intval($_GET['Enroll_id']);
     $query = "UPDATE enrollments SET enroll ='enroll' WHERE id = ? ";
-    $stmt = $conn->prepare($query); 
+    $stmt = $conn->prepare($query);
     $stmt->bind_param("i", $enroll_id);
     if ($stmt->execute()) {
-        header("Location: http://localhost/madadali_LMS/View/Enrollment.php?enroll_id=success");
+        header("location:   http://localhost/madadali_LMS/View/email_Student_.php?email=" . $_SESSION['student_email']);
         exit;
     }
-    
 }
 // end the Eroll course

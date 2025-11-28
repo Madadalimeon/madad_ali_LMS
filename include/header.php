@@ -17,7 +17,7 @@
         rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css"
         integrity="sha512-2SwdPD6INVrV/lHTZbO2nodKhrnDdJK9/kg2XD1r9uGqPo1cUbujc+IYdlYdEErWNu69gVcYgdxlmVmzTWnetw=="
-        crossorigin="anonymous" referrerpolicy="no-referrer" />
+        crossorigin="anonymous" referrerpolicy="no-6referrer" />
     <!-- Custom styles for this template-->
     <link href="css/sb-admin-2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
@@ -38,7 +38,11 @@
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
-                <div class="sidebar-brand-text mx-3">SB Admin <sup>2</sup></div>
+                <div class="sidebar-brand-text mx-3"><sup>
+                        <?php
+                        echo $_SESSION['role'];
+                        ?>
+                    </sup></div>
             </a>
 
 
@@ -90,6 +94,13 @@
                         <i class="fas fa-fw fa-user"></i>
                         <span>Buy history </span></a>
                 </li>
+
+                <li class="nav-item">
+                    <a class="nav-link" href="Learning.php">
+                        <i class="fa-solid fa-person-chalkboard"></i>
+                        <span>My Learning</span></a>
+                </li>
+
             <?php
             }
             ?>

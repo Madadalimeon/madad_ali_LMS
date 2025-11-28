@@ -17,7 +17,8 @@ include __DIR__ . "/../include/header.php";
           <tr>
             <th scope="col">Enrollment ID</th>
             <th scope="col">Course</th>
-            <th scope="col-3">Student</th>
+            <th scope="col">Student</th>
+            <th scope="col">Email</th>
             <th scope="col">Enrolled At</th>
             <th scope="col">Enroll in Courser</th>
           </tr>
@@ -32,10 +33,11 @@ include __DIR__ . "/../include/header.php";
           en.id AS enrollment_id,
           en.enrolled_at,
           u.id AS users_id,
-          u.name AS users_name
+          u.name AS users_name,
+          u.email AS users_email
           FROM courses c
           JOIN enrollments en ON c.id = en.course_id
-          JOIN users u ON en.student_id = u.id";
+          JOIN users u ON en.student_id = u.id;";
           $stmt = $db->prepare($query);
           $stmt->execute();
           $result = $stmt->get_result();
@@ -46,6 +48,7 @@ include __DIR__ . "/../include/header.php";
               <td><?php echo $row['enrollment_id']; ?></td>
               <td><?php echo $row['course_title']; ?></td>
               <td><?php echo $row['users_name']; ?></td>
+              <td><?php echo $_SESSION["student_email"] =  $row['users_email']; ?></td>
               <td><?php echo $row['enrolled_at']; ?></td>
               <td><a href="./../Controller/approve_reject.php?Enroll_id=<?php echo $row['enrollment_id']; ?>" class="btn btn-success">Enroll Courser</a></td>
             </tr>

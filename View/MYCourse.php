@@ -73,6 +73,37 @@ $login_id = $_SESSION['user_id'];
     </table>
 </div>
 
+<!-- stat alert msg of add couees -->
+<?php
+if (isset($_SESSION['success'])): ?>
+    <script>
+        Swal.fire({
+            icon: 'success',
+            title: 'Success!',
+            text: '<?php echo $_SESSION['success']; ?>',
+            confirmButtonColor: '#3085d6'
+        })
+    </script>
+<?php unset($_SESSION['success']);
+endif; ?>
+
+<?php if (isset($_SESSION['error'])): ?>
+    <script>
+        Swal.fire({
+            icon: 'error',
+            title: 'Error!',
+            text: '<?php echo $_SESSION['error']; ?>',
+            confirmButtonColor: '#d33'
+        })
+    </script>
+<?php unset($_SESSION['error']);
+endif; ?>
+
+<!-- end -->
+
+
+
+
 <?php if (isset($_GET['add']) && $_GET['add'] == 'success'): ?>
     <script>
         Swal.fire({
