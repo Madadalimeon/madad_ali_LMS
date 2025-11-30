@@ -1,19 +1,16 @@
 <?php
 session_start();
-
-if (!isset($_SESSION["student_email"])) {
+if (!isset($_SESSION['email'])) {
     die("Student email not found in session");
 }
 
-$student_email = $_SESSION["student_email"];
+$student_email = $_SESSION['email'];
 echo $student_email;
-die;
-
+echo "<br>".$_SESSION['name'] . " <br>" . $_SESSION['S_title'] . " <br>" . $_SESSION['S_instructor_name'] . "<br> " . $_SESSION['S_course_price'];
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\Exception;
 
 require __DIR__ . '/../vendor/autoload.php';
-
 
 try {
     $mail = new PHPMailer(true);
@@ -78,17 +75,12 @@ try {
         <p><strong>Course Enrolled:</strong> {$_SESSION['S_title']}</p>
         <p>This student has successfully enrolled in the course.</p>
     ";
-
     $mail->AltBody = "New Enrollment:\nStudent: {$_SESSION['name']}\nEmail: {$_SESSION['email']}\nCourse: {$_SESSION['S_title']}";
-
     $mail->send();
 } catch (Exception $e) {
     echo "Admin email could not be sent. Mailer Error: {$mail->ErrorInfo}";
 }
-
-
-
 if (isset($_SESSION['name'])) {
-    header("Location: http://localhost/madadali_LMS/View/Buy_Course.php");
+    header("Location: http://localhost/madadali_LMS/View/Buy_Course.php?enroll_success=true");    
     exit;
 }

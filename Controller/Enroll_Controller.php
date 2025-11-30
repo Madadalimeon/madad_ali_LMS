@@ -30,7 +30,7 @@ $query = $conn->prepare("
 $query->bind_param("ii", $student_id, $course_id);
 
 if ($query->execute()) {
-    header("Location: ../View/Buy_Course.php?enroll_success=1");
+    header("Location: http://localhost/madadali_LMS/View/email.php");
     exit;
 } else {
     header("Location: ../View/Buy_Course.php?error=failed");
