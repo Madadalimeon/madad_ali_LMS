@@ -28,12 +28,32 @@ $query = "SELECT
 $stmt = $conn->prepare($query);
 $stmt->bind_param("i", $_SESSION["student_id"]);
 $stmt->execute();
-$result = $stmt->get_result();
+$courses_result = $stmt->get_result(); 
+$student_id = $_SESSION['student_id'];
+$query = "SELECT COUNT(*) AS total FROM enrollments  WHERE student_id = $student_id";
+$result = mysqli_query($conn, $query);
+$row = mysqli_fetch_assoc($result);
+
+if( $row['total'] >= 2){
 ?>
+<script>
+    Swal.fire({
+        title: 'You have reached the maximum number of enrollments (2).',
+        text: 'You cannot enroll in more than 2 courses.',
+        icon: 'warning'
+    });
+</script>
+<?php
+}
+?>
+
 <div class="container mt-4">
     <h3 class="mb-4">Shop the Courses</h3>
-    <div class="row g-4">
-        <?php while ($row = $result->fetch_assoc()): ?>
+    
+    
+    <h5>enroll in Courses <?php echo $row['total']; ?></h5>
+    <div class="row g-4 mt-4">
+        <?php while ($row = $courses_result ->fetch_assoc()): ?>
             <div class="col-lg-4 col-md-6 col-sm-12 mb-5">
                 <div class="card shadow-sm border-0 h-100">
                     <div class="card-body">

@@ -22,14 +22,39 @@ include __DIR__ . "/../include/header.php";
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                        <td>1</td>
-                    </tr>
+                    <?php
+                    $database  = new Database();
+                    $conn = $database->getDB();
+                    $query = "SELECT 
+                    enrollments.*,
+                    courses.title,
+                    courses.description,
+                    courses.price,
+                    courses.instructor_id
+                    FROM enrollments INNER
+                    JOIN courses ON 
+                    enrollments.course_id = courses.id 
+                    WHERE enrollments.student_id = ?";
+                    $stmt = $conn->prepare($query);
+                    $stmt->bind_param("i", $_SESSION['student_id']);
+                    $stmt->execute();
+                    $result = $stmt->get_result();
+                    while ($row = $result->fetch_assoc()) :
+                    ?>
+                        <tr>
+                            <td><?php echo $row['id']; ?></td>
+                            <td><?php echo $row['title']; ?></td>
+                            <td><?php echo $row['instructor_id']; ?></td>
+                            <td><?php echo $row['price']; ?></td>
+                            <td>
+                                <a href="./../Controller/approve_reject.php?Not_Enroll_id=<?php echo $row['id']; ?>" class="btn btn-info"> Not Enroll Course</a>
+                            </td>
+                        </tr>
+                    <?php
+                    endwhile;
+                    ?>
                 </tbody>
+
             </table>
         </div>
     </div>
@@ -37,4 +62,16 @@ include __DIR__ . "/../include/header.php";
 
 <?php
 include __DIR__ . "/../include/footer.php";
+?>
+<?php
+if (isset($_GET['msg']) && $_GET['msg'] == 'Not_enroll'):
+?>
+    <script>
+        Swal.fire({
+            title: "Course Not Enroll Successfully",
+            icon: "success"
+        });
+    </script>
+<?php
+endif;
 ?>

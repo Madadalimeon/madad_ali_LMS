@@ -36,4 +36,15 @@ if (isset($_GET['Enroll_id'])) {
         exit;
     }
 }
+
+if (isset($_GET['Not_Enroll_id'])) {
+    $Not_enroll_id = intval($_GET['Not_Enroll_id']);
+    $query =" DELETE FROM enrollments WHERE id = ? ";
+    $stmt = $conn->prepare($query);
+    $stmt->bind_param("i", $Not_enroll_id);
+    if ($stmt->execute()) {
+        header("Location: http://localhost/madadali_LMS/View/Learning.php?msg=Not_enroll");
+        exit;
+    }
+}
 // end the Eroll course
