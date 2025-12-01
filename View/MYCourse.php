@@ -46,7 +46,7 @@ $login_id = $_SESSION['user_id'];
                     <td><?php echo $i++; ?></td>
                     <td><?php echo $row['title']; ?></td>
 
-                    <td class="<?php echo ($row['status'] == 'Approve') ? 'text-success fw-bold' : 'text-info fw-bold'; ?>">
+                    <td class="<?php echo ($row['status'] == 'Approve') ? 'text-success fw-bold' : 'text-danger fw-bold'; ?>">
                         <?php echo $row['status']; ?>
                     </td>
 

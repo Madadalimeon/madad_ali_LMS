@@ -23,7 +23,7 @@ $check_result = $check->get_result();
 if ($check_result->num_rows > 0) {
     header("Location: ../View/Buy_Course.php?error=already_enrolled");
     exit;
-}elseif($_SESSION['total'] >= 2){
+}elseif($_SESSION['total'] >= 5){
     header("Location: ../View/Buy_Course.php?error=max_enrollments");
     exit;
 }

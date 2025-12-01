@@ -1,5 +1,6 @@
 <?php
 session_start();
+$user_id = $_SESSION['user_id'];
 if (!isset($_SESSION["role"]) && $_SESSION["role"] !== "admin") {
     header("Location: http://localhost/madadali_LMS/View/login.php");
     exit;
@@ -200,9 +201,82 @@ include __DIR__ . "/../include/header.php";
                     </div>
                 </div>
             </div>
+
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    Total Coures </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <?php
+                                    $database = new Database();
+                                    $conn = $database->getDB();
+                                    $query = "SELECT COUNT(*) AS total_courses FROM courses WHERE instructor_id = $user_id AND status = 'Approve'";
+                                    $result = mysqli_query($conn, $query);
+                                    $row = mysqli_fetch_assoc($result);
+                                    echo $row['total_courses'];
+                                    ?>
+
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-book fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
-    </div>  
+    </div>
 <?php endif; ?>
+
+<?php if (isset($_SESSION['role'])  && $_SESSION["role"] == "student") : ?>
+    <div class="container-fluid">
+
+        <div class="d-sm-flex align-items-center justify-content-between mb-4">
+            <h1 class="h3 mb-0 text-gray-800">Dashboard</h1>
+            <a href="index.php" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"><i
+                    class="fas fa-download fa-sm text-white-50"></i> Generate Report</a>
+        </div>
+
+        <div class="row">
+
+            <div class="col-xl-3 col-md-6 mb-4">
+                <div class="card border-left-primary shadow h-100 py-2">
+                    <div class="card-body">
+                        <div class="row no-gutters align-items-center">
+                            <div class="col mr-2">
+                                <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+                                    enroll Course </div>
+                                <div class="h5 mb-0 font-weight-bold text-gray-800">
+                                    <?php
+                                    $database = new Database();
+                                    $conn = $database->getDB();
+                                    $query = "SELECT COUNT(*) AS total FROM enrollments WHERE enroll = 'enroll' AND student_id = $user_id";
+                                    $result = mysqli_query($conn, $query);
+                                    $row = mysqli_fetch_assoc($result);
+                                    echo $row['total'];
+                                    ?>
+
+                                </div>
+                            </div>
+                            <div class="col-auto">
+                                <i class="fas fa-user fa-2x text-gray-300"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<?php endif; ?>
+
 
 </div>
 <?php

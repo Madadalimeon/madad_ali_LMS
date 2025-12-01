@@ -27,6 +27,7 @@ include __DIR__ . "/../include/header.php";
                     $conn = $database->getDB();
                     $query = "SELECT 
                     enrollments.*,
+                    courses.id AS course_id,
                     courses.title,
                     courses.description,
                     courses.price,
@@ -48,7 +49,8 @@ include __DIR__ . "/../include/header.php";
                                 <td><?php echo $row['instructor_id']; ?></td>
                                 <td><?php echo $row['price']; ?></td>
                                 <td>
-                                    <a href="./../Controller/approve_reject.php?Not_Enroll_id=<?php echo $row['id']; ?>" class="btn btn-info"> Not Enroll Course</a>
+                                    <a href="View_Course.php?View_id=<?= $row['course_id']; ?>"class="btn btn-info ">View Course</a>
+                                    <a href="./../Controller/approve_reject.php?Not_Enroll_id=<?php echo $row['id']; ?>" class="btn btn-danger"> Unenroll this Course</a>
                                 </td>
                             </tr>
                     <?php

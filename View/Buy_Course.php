@@ -29,14 +29,14 @@ $student_id = $_SESSION['student_id'];
 $query = "SELECT COUNT(*) AS total FROM enrollments  WHERE student_id = $student_id";
 $result = mysqli_query($conn, $query);
 $row = mysqli_fetch_assoc($result);
-
-if ($row['total'] >= 2) {
+$_SESSION['total'] = $row['total'];
+if (isset($_GET["error"]) && $_GET["error"] === "max_enrollments") {
 ?>
     <script>
         Swal.fire({
-            title: 'You have reached the maximum number of enrollments (2).',
-            text: 'You cannot enroll in more than 2 courses.',
-            icon: 'warning'
+            title: "You have reached the maximum number of enrollments <?= $_SESSION['total'] ?>.",
+            text: "You cannot enroll in more than <?= $_SESSION['total'] ?> courses.",
+            icon: "warning"
         });
     </script>
 <?php
@@ -47,7 +47,7 @@ if ($row['total'] >= 2) {
     <h3 class="mb-4">Shop the Courses</h3>
 
 
-    <h5>enroll in Courses <?php echo $row['total']; ?></h5>
+    <h5>enroll in Courses <?php echo $_SESSION['total']; ?></h5>
     <div class="row g-4 mt-4">
         <?php while ($row = $courses_result->fetch_assoc()): ?>
             <div class="col-lg-4 col-md-6 col-sm-12 mb-5">

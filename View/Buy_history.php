@@ -16,14 +16,26 @@ include __DIR__ . "/../Config/Config.php";
                 <thead>
                     <tr>
                         <th>id</th>
-                        <th>Course</th>
+                        <th>Course title</th>
+                        <th>Course price</th>
                         <th>Enrolled_at</th>
                     </tr>
                     <tr>
                         <?php
                         $database  = new Database();
                         $conn = $database->getDB();
-                        $query = "SELECT * FROM enrollments WHERE student_id = ?";
+                        $conn = $database->getDB();
+                        $query = "SELECT 
+                    enrollments.*,
+                    courses.id AS course_id,
+                    courses.title,
+                    courses.description,
+                    courses.price,
+                    courses.instructor_id
+                    FROM enrollments INNER
+                    JOIN courses ON 
+                    enrollments.course_id = courses.id 
+                    WHERE enrollments.student_id = ?";
                         $stmt = $conn->prepare($query);
                         $stmt->bind_param("i", $_SESSION['student_id']);
                         $stmt->execute();
@@ -31,7 +43,8 @@ include __DIR__ . "/../Config/Config.php";
                         while ($row = $result->fetch_assoc()) :
                         ?>
                             <td><?php echo $row['id']; ?></td>
-                            <th><?php echo $row['course_id']; ?></th>
+                            <th><?php echo $row['title']; ?></th>
+                            <th>$ <?php echo $row['price']; ?></th>
                             <td><?php echo $row['enrolled_at']; ?></td>
                     </tr>
                 </thead>

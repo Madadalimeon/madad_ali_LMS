@@ -50,9 +50,9 @@ include __DIR__ . "/../include/header.php";
               <td><?php echo $row['users_name']; ?></td>
               <td><?php echo $_SESSION["student_email"] =  $row['users_email']; ?></td>
               <td><?php echo $row['enrolled_at']; ?></td>
-              <td>
-                <a href="./../Controller/approve_reject.php?Enroll_id=<?php echo $row['enrollment_id']; ?>" class="btn btn-success">Enroll Course</a>
-                <a href="./../Controller/approve_reject.php?NotEnroll_id=<?php echo $row['enrollment_id']; ?>" class="btn btn-danger">Not Enroll Course</a>
+              <td class="d-flex gap-5">
+                <a href="./../Controller/approve_reject.php?Enroll_id=<?php echo $row['enrollment_id']; ?>" class="btn btn-success">Enroll </a>
+                <a href="./../Controller/approve_reject.php?NotEnroll_id=<?php echo $row['enrollment_id']; ?>" class="btn btn-danger">Unenroll </a>
               </td>
             </tr>
           <?php endwhile; ?>
