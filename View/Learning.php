@@ -41,16 +41,18 @@ include __DIR__ . "/../include/header.php";
                     $result = $stmt->get_result();
                     while ($row = $result->fetch_assoc()) :
                     ?>
-                        <tr>
-                            <td><?php echo $row['id']; ?></td>
-                            <td><?php echo $row['title']; ?></td>
-                            <td><?php echo $row['instructor_id']; ?></td>
-                            <td><?php echo $row['price']; ?></td>
-                            <td>
-                                <a href="./../Controller/approve_reject.php?Not_Enroll_id=<?php echo $row['id']; ?>" class="btn btn-info"> Not Enroll Course</a>
-                            </td>
-                        </tr>
+                        <?php if ($row["enroll"] == "enroll") { ?>
+                            <tr>
+                                <td><?php echo $row['id']; ?></td>
+                                <td><?php echo $row['title']; ?></td>
+                                <td><?php echo $row['instructor_id']; ?></td>
+                                <td><?php echo $row['price']; ?></td>
+                                <td>
+                                    <a href="./../Controller/approve_reject.php?Not_Enroll_id=<?php echo $row['id']; ?>" class="btn btn-info"> Not Enroll Course</a>
+                                </td>
+                            </tr>
                     <?php
+                        };
                     endwhile;
                     ?>
                 </tbody>
