@@ -19,9 +19,9 @@ include  __DIR__ . "/../include/header.php";
                     <thead>
                         <tr>
                             <th>id</th>
-                            <th>name</th>
-                            <th>email</th>
-                            <th>role</th>
+                            <th>course title</th>
+                            <th>instructor name</th>
+                            <th>course price</th>
                             <th>Action</th>
                         </tr>
                     </thead>
@@ -54,7 +54,7 @@ include  __DIR__ . "/../include/header.php";
                                     <td><?php echo $row['user_id']; ?></td>
                                     <td><?php echo $row['title']; ?></td>
                                     <td><?php echo $row['instructor_name']; ?></td>
-                                    <td style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"><?php echo $row['description']; ?></td>
+                                    <td>$<?php echo $row['price']; ?></td>
                                     <td>
                                         <a href="./../Controller/approve_reject.php?approve_id=<?php echo $row['course_id']; ?>" class="btn btn-primary btn-sm">Approve</a>
                                         <a href="./../Controller/approve_reject.php?reject_id=<?php echo $row['course_id']; ?>" class="btn btn-danger btn-sm">Reject</a>

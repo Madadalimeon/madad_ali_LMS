@@ -24,7 +24,6 @@ $login_id = $_SESSION['user_id'];
                 <th>#</th>
                 <th>Title</th>
                 <th>Status</th>
-                <th>Description</th>
                 <th>Price</th>
                 <th>Actions</th>
             </tr>
@@ -51,9 +50,7 @@ $login_id = $_SESSION['user_id'];
                         <?php echo $row['status']; ?>
                     </td>
 
-                    <td style="max-width: 250px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">
-                        <?php echo $row['description']; ?>
-                    </td>
+                 
 
                     <td class="text-success fw-bold">
                         $. <?php echo $row['price']; ?>
