@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 02, 2025 at 01:57 PM
+-- Generation Time: Dec 03, 2025 at 01:53 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -69,7 +69,10 @@ CREATE TABLE `enrollments` (
 --
 
 INSERT INTO `enrollments` (`id`, `course_id`, `student_id`, `progress`, `enrolled_at`, `enroll`) VALUES
-(220, 24, 15, 0, '2025-12-02 09:29:00', 'enroll');
+(223, 24, 15, 0, '2025-12-03 17:21:56', 'enroll'),
+(224, 25, 15, 0, '2025-12-03 17:28:21', 'enroll'),
+(225, 26, 15, 0, '2025-12-03 17:28:28', 'enroll'),
+(226, 24, 16, 0, '2025-12-03 17:41:29', 'enroll');
 
 -- --------------------------------------------------------
 
@@ -95,7 +98,14 @@ INSERT INTO `lessons` (`id`, `course_id`, `title`, `content`, `video_url`, `Acti
 (8, 24, 'stact a html', 'html a hmt will tag section etc', 'https://www.youtube.com/embed/1IVopxj8q8U', 'Complete'),
 (9, 24, 'start Css ', 'start Css for Begger', 'https://www.youtube.com/embed/1IVopxj8q8U', 'Complete'),
 (10, 24, 'start js ', 'start js for begger', 'https://www.youtube.com/embed/1IVopxj8q8U', 'Complete'),
-(11, 24, 'start git and github', 'start git and github for Beggin', 'https://www.youtube.com/embed/1IVopxj8q8U', 'Complete');
+(11, 24, 'start git and github', 'start git and github for Beggin', 'https://www.youtube.com/embed/1IVopxj8q8U', 'Complete'),
+(15, 24, 'qwerty', 'rtyuio', 'wert', 'Complete'),
+(16, 24, 'Consequatur Nesciun', 'Repudiandae dignissi', 'Sed quam deserunt qu', 'Complete'),
+(17, 25, 'Consequat Voluptate', 'Illum voluptas omni', 'Perferendis in corru', 'Complete'),
+(18, 25, 'Quo quaerat reiciend', 'Soluta architecto au', 'Quo nobis et exercit', 'Not_Complete'),
+(19, 25, 'Voluptatibus dolor e', 'Dolorem est aut magn', 'Ut accusantium rem q', 'Not_Complete'),
+(20, 25, 'Omnis ipsum veniam ', 'Ea enim qui culpa in', 'Fugiat ut ea pariatu', 'Not_Complete'),
+(21, 25, 'Mollit ea nisi inven', 'Iure unde officiis a', 'Nulla quidem volupta', 'Not_Complete');
 
 -- --------------------------------------------------------
 
@@ -169,13 +179,13 @@ ALTER TABLE `courses`
 -- AUTO_INCREMENT for table `enrollments`
 --
 ALTER TABLE `enrollments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=222;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=227;
 
 --
 -- AUTO_INCREMENT for table `lessons`
 --
 ALTER TABLE `lessons`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=22;
 
 --
 -- AUTO_INCREMENT for table `users`

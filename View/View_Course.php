@@ -46,7 +46,7 @@ include __DIR__ . "/../include/header.php";
     <div class="row mt-4">
         <div class="col">
             <div class="progress">
-                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 0%" id="progress-bar"></div>
+                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%" id="progress-bar"></div>
             </div>
         </div>
     </div>
@@ -114,7 +114,7 @@ include __DIR__ . "/../include/header.php";
                     $stmt = mysqli_query($conn, $query);
                     while ($row = $stmt->fetch_assoc()) :
                     ?>
-                        <a href="View_Course.php?View_id=<?php echo $course_id ?>&lesson_id=<?php echo $row["id"]  ?>">
+                        <a style="text-decoration:none; color:black;" href="View_Course.php?View_id=<?php echo $course_id ?>&lesson_id=<?php echo $row["id"]  ?>">
 
                             <div class="playlist-item" data-video="<?php echo $row['video_url']; ?>" id="lesson-<?php echo $index; ?>">
                                 <?php echo $row['title']; ?>
@@ -153,7 +153,7 @@ $value = intval($row['all_condition']);
     <div class="container mt-4 mb-4">
         <div class="row">
             <div class="col">
-                <?php
+                <?php  
                 $database = new Database();
                 $conn = $database->getDB();
                 $query = "SELECT 
