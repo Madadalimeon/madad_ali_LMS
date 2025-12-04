@@ -11,7 +11,7 @@ include __DIR__ . "/../include/header.php";
         border-radius: 10px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
     }
-
+    
     .playlist-box {
         background: #f7f7f7;
         padding: 20px;
@@ -20,7 +20,7 @@ include __DIR__ . "/../include/header.php";
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
         overflow-y: auto;
     }
-
+    
     .playlist-item {
         padding: 12px;
         background: white;
@@ -30,7 +30,7 @@ include __DIR__ . "/../include/header.php";
         transition: 0.3s;
         border: 1px solid #ddd;
     }
-
+    
     .playlist-item:hover {
         background: #ddd;
         transform: translateX(10 px);
@@ -50,7 +50,7 @@ include __DIR__ . "/../include/header.php";
             </div>
         </div>
     </div>
-
+    
 </div>
 <div class="container mt-4">
     <div class="row g-4">
@@ -65,14 +65,14 @@ include __DIR__ . "/../include/header.php";
                 $query = "SELECT * from user_progress WHERE Action ='Complete' AND  lessons_id =  $lesson_id AND user_id = $student_id AND course_id = $View_id ";
                 $stmt = mysqli_query($conn, $query);
                 if ($stmt->num_rows < 1) {
-            ?>
+                    ?>
                     <form method="post">
                         <button type="submit" name="submit" value="1" class="btn btn-primary">Mark as Completed </button>
                     </form>
-                <?php } else {
-                ?>
+                    <?php } else {
+                        ?>
                     <button type="submit" name="submit" value="1" class="btn btn-primary" disabled>Completed </button>
-            <?php }
+                    <?php }
             }
             ?>
             <div class="video-box mt-3">
@@ -81,18 +81,18 @@ include __DIR__ . "/../include/header.php";
                 </h4>
                 <div style="position:relative; width:100%; padding-bottom:56.25%;">
                     <iframe id="video-player"
-                        src=""
-                        style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;"
-                        allow="autoplay; encrypted-media"
-                        allowfullscreen>
-                    </iframe>
-                </div>
+                    src=""
+                    style="position:absolute; top:0; left:0; width:100%; height:100%; border:0;"
+                    allow="autoplay; encrypted-media"
+                    allowfullscreen>
+                </iframe>
             </div>
         </div>
-
-        <div class="col-md-4 mt-5 pt-1">
-            <div class="playlist-box">
-                <?php
+    </div>
+    
+    <div class="col-md-4 mt-5 pt-1">
+        <div class="playlist-box">
+            <?php
                 if (isset($_POST['submit'])) {
                     $View_id =  intval($_GET["View_id"]);
                     $student_id = intval($_SESSION['student_id']);
@@ -102,7 +102,6 @@ include __DIR__ . "/../include/header.php";
                     $userprogess_query = "INSERT INTO user_progress (user_id,lessons_id,course_id,Action) VALUES ($student_id,$lesson_id,$View_id,'Complete')";
                     $stmt = mysqli_query($conn, $userprogess_query);
                 }
-
                 ?>
                 <h4 class="mb-3">Course Playlist</h4>
                 <div class="playlist-item">
@@ -122,21 +121,23 @@ include __DIR__ . "/../include/header.php";
                      ON l.course_id = up.course_id WHERE l.course_id = $course_id ";
                     $stmt = mysqli_query($conn, $query);
                     while ($row = $stmt->fetch_assoc()) :
-                    ?>
+                        ?>
                         <a style="text-decoration:none; color:black;" href="View_Course.php?View_id=<?php echo $course_id ?>&lesson_id=<?php echo $row["id"]  ?>">
 
                             <div class="playlist-item" data-video="<?php echo $row['video_url']; ?>" id="lesson-<?php echo $index; ?>">
                                 <?php echo $row['title']; ?>
                                 <?php
-                                if ($row['Action'] == "Complete") {
-                                    echo "✅";
-                                }else{
-
-                                }
-                                ?>
+                                
+                                    if ($row['Action'] == "Complete" && $row["course_id"] == $course_id ) {
+                                        echo "✅";
+                                    }else{
+                                        
+                                    }
+                                
+                                    ?>
                             </div>
                         </a>
-                    <?php
+                        <?php
                     endwhile;
                     ?>
                 </div>

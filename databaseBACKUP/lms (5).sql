@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Dec 03, 2025 at 01:53 PM
+-- Generation Time: Dec 04, 2025 at 12:57 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.2.12
 
@@ -47,7 +47,7 @@ INSERT INTO `courses` (`id`, `title`, `description`, `instructor_id`, `price`, `
 (27, 'Beginners Guide to Learning PHP 5', 'Learn how to write PHP code. Beginners quick start guide to learning the foundations of PHP coding', 14, 130.00, 'Approve'),
 (28, 'Complete web development course', 'Only web development course that you will need. Covers HTML, CSS, Tailwind, Node, React, MongoDB, Prisma, Deployment etc', 14, 130.00, 'Approve'),
 (29, 'Master React JS and Tailwind CSS with Real-World Projects', 'Learn how to build a game listing app with React, Tailwind CSS, Vite, and Vercel.', 14, 100.00, 'Approve'),
-(30, 'Repudiandae ullamco ', 'Consequatur Deserun', 13, 465.00, 'Reject');
+(30, 'Repudiandae ullamco ', 'Consequatur Deserun', 13, 465.00, 'Pending');
 
 -- --------------------------------------------------------
 
@@ -72,7 +72,7 @@ INSERT INTO `enrollments` (`id`, `course_id`, `student_id`, `progress`, `enrolle
 (223, 24, 15, 0, '2025-12-03 17:21:56', 'enroll'),
 (224, 25, 15, 0, '2025-12-03 17:28:21', 'enroll'),
 (225, 26, 15, 0, '2025-12-03 17:28:28', 'enroll'),
-(226, 24, 16, 0, '2025-12-03 17:41:29', 'enroll');
+(226, 24, 16, 2, '2025-12-03 17:41:29', 'enroll');
 
 -- --------------------------------------------------------
 
@@ -94,14 +94,14 @@ CREATE TABLE `lessons` (
 --
 
 INSERT INTO `lessons` (`id`, `course_id`, `title`, `content`, `video_url`, `Active`) VALUES
-(7, 24, 'Rodmap of forntend Dev', 'Rodmap of forntend Dev for Beginner', 'https://www.youtube.com/embed/1IVopxj8q8U', 'Complete'),
-(8, 24, 'stact a html', 'html a hmt will tag section etc', 'https://www.youtube.com/embed/1IVopxj8q8U', 'Complete'),
+(7, 24, 'Rodmap of forntend Dev', 'Rodmap of forntend Dev for Beginner', 'https://www.youtube.com/embed/1IVopxj8q8U', 'Not_Complete'),
+(8, 24, 'stact a html', 'html a hmt will tag section etc', 'https://www.youtube.com/embed/1IVopxj8q8U', 'Not_Complete'),
 (9, 24, 'start Css ', 'start Css for Begger', 'https://www.youtube.com/embed/1IVopxj8q8U', 'Complete'),
-(10, 24, 'start js ', 'start js for begger', 'https://www.youtube.com/embed/1IVopxj8q8U', 'Complete'),
-(11, 24, 'start git and github', 'start git and github for Beggin', 'https://www.youtube.com/embed/1IVopxj8q8U', 'Complete'),
-(15, 24, 'qwerty', 'rtyuio', 'wert', 'Complete'),
-(16, 24, 'Consequatur Nesciun', 'Repudiandae dignissi', 'Sed quam deserunt qu', 'Complete'),
-(17, 25, 'Consequat Voluptate', 'Illum voluptas omni', 'Perferendis in corru', 'Complete'),
+(10, 24, 'start js ', 'start js for begger', 'https://www.youtube.com/embed/1IVopxj8q8U', 'Not_Complete'),
+(11, 24, 'start git and github', 'start git and github for Beggin', 'https://www.youtube.com/embed/1IVopxj8q8U', 'Not_Complete'),
+(15, 24, 'qwerty', 'rtyuio', 'wert', 'Not_Complete'),
+(16, 24, 'Consequatur Nesciun', 'Repudiandae dignissi', 'Sed quam deserunt qu', 'Not_Complete'),
+(17, 25, 'Consequat Voluptate', 'Illum voluptas omni', 'Perferendis in corru', 'Not_Complete'),
 (18, 25, 'Quo quaerat reiciend', 'Soluta architecto au', 'Quo nobis et exercit', 'Not_Complete'),
 (19, 25, 'Voluptatibus dolor e', 'Dolorem est aut magn', 'Ut accusantium rem q', 'Not_Complete'),
 (20, 25, 'Omnis ipsum veniam ', 'Ea enim qui culpa in', 'Fugiat ut ea pariatu', 'Not_Complete'),
@@ -131,6 +131,41 @@ INSERT INTO `users` (`id`, `name`, `email`, `password`, `role`) VALUES
 (14, 'Shaheer', 'Shaheermemon90@gmail.com', '$2y$10$330tDytdz1.GDIPTx456T.4QL/u9RHkgTETuJRalJIMLUVz5i0j4C', 'instructor'),
 (15, 'saad memon', 'madadalim803@gmail.com', '$2y$10$D3slOoCtlyHCCO5b0O6iBu6fjMdy7EZug2ejscRf3LGx44AJu/hTe', 'student'),
 (16, 'buriroabdul', 'buriroabdulqayoom2002@gmail.com', '$2y$10$plV.HnQp.5dAqIxp6MHms.5xGMT7ZRpJCqjMkLuThTovHJrxJNQ8K', 'student');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `user_progress`
+--
+
+CREATE TABLE `user_progress` (
+  `user_id` int(11) NOT NULL,
+  `lessons_id` int(11) NOT NULL,
+  `course_id` int(11) NOT NULL,
+  `Action` enum('Complete','not_Complete') DEFAULT 'not_Complete'
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `user_progress`
+--
+
+INSERT INTO `user_progress` (`user_id`, `lessons_id`, `course_id`, `Action`) VALUES
+(15, 7, 24, 'Complete'),
+(15, 7, 24, 'Complete'),
+(15, 7, 24, 'Complete'),
+(15, 8, 24, 'Complete'),
+(15, 8, 24, 'Complete'),
+(15, 9, 24, 'Complete'),
+(15, 9, 24, 'Complete'),
+(15, 9, 24, 'Complete'),
+(15, 9, 24, 'Complete'),
+(15, 9, 24, 'Complete'),
+(15, 9, 24, 'Complete'),
+(15, 9, 24, 'Complete'),
+(15, 15, 24, 'Complete'),
+(15, 15, 24, 'Complete'),
+(15, 15, 24, 'Complete'),
+(15, 15, 24, 'Complete');
 
 --
 -- Indexes for dumped tables
