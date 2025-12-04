@@ -33,7 +33,7 @@ include __DIR__ . "/../include/header.php";
 
     .playlist-item:hover {
         background: #ddd;
-        transform: translateX(15px);
+        transform: translateX(10 px);
     }
 
     .playlist-item.active {
@@ -46,7 +46,7 @@ include __DIR__ . "/../include/header.php";
     <div class="row mt-4">
         <div class="col">
             <div class="progress">
-                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 100%" id="progress-bar"></div>
+                <div class="progress-bar progress-bar-striped bg-success" role="progressbar" style="width: 10%" id="progress-bar"></div>
             </div>
         </div>
     </div>
@@ -57,17 +57,20 @@ include __DIR__ . "/../include/header.php";
         <div class="col-md-8">
             <?php
             if (isset($_GET['lesson_id'])) {
+                $View_id = $_GET["View_id"] ?? null;
                 $lesson_id = $_GET['lesson_id'] ?? null;
+                $student_id = intval($_SESSION['student_id']);
                 $database = new Database();
                 $conn = $database->getDB();
-                $query = "SELECT * from lessons WHERE Active ='Not_Complete' AND  id =  $lesson_id ";
+                $query = "SELECT * from user_progress WHERE Action ='Complete' AND  lessons_id =  $lesson_id AND user_id = $student_id AND course_id = $View_id ";
                 $stmt = mysqli_query($conn, $query);
-                if ($stmt->num_rows > 0) {
+                if ($stmt->num_rows < 1) {
             ?>
                     <form method="post">
                         <button type="submit" name="submit" value="1" class="btn btn-primary">Mark as Completed </button>
                     </form>
-                <?php } else {  ?>
+                <?php } else {
+                ?>
                     <button type="submit" name="submit" value="1" class="btn btn-primary" disabled>Completed </button>
             <?php }
             }
@@ -91,16 +94,14 @@ include __DIR__ . "/../include/header.php";
             <div class="playlist-box">
                 <?php
                 if (isset($_POST['submit'])) {
-                    $course_id =  $_GET['View_id'];
-                    $lesson_id = $_GET['lesson_id'];
-                    $Check_value = intval($_POST['submit']);
+                    $View_id =  intval($_GET["View_id"]);
+                    $student_id = intval($_SESSION['student_id']);
+                    $lesson_id = intval($_GET["lesson_id"]);
                     $database = new Database();
                     $conn = $database->getDB();
-                    $query = "UPDATE lessons SET Active = 'Complete' WHERE id = $lesson_id";
-                    $stmt = mysqli_query($conn, $query);
+                    $userprogess_query = "INSERT INTO user_progress (user_id,lessons_id,course_id,Action) VALUES ($student_id,$lesson_id,$View_id,'Complete')";
+                    $stmt = mysqli_query($conn, $userprogess_query);
                 }
-
-
 
                 ?>
                 <h4 class="mb-3">Course Playlist</h4>
@@ -110,7 +111,15 @@ include __DIR__ . "/../include/header.php";
                     $lesson_id =  $_GET['lesson_id'] ?? null;
                     $database = new Database();
                     $conn = $database->getDB();
-                    $query = "SELECT * FROM lessons WHERE course_id = $course_id";
+                    $query = "SELECT
+                     l.id,
+                     l.course_id,
+                     l.video_url, 
+                     l.title, 
+                     up.course_id, 
+                     up.Action 
+                     FROM lessons l LEFT JOIN user_progress up 
+                     ON l.course_id = up.course_id WHERE l.course_id = $course_id ";
                     $stmt = mysqli_query($conn, $query);
                     while ($row = $stmt->fetch_assoc()) :
                     ?>
@@ -119,12 +128,12 @@ include __DIR__ . "/../include/header.php";
                             <div class="playlist-item" data-video="<?php echo $row['video_url']; ?>" id="lesson-<?php echo $index; ?>">
                                 <?php echo $row['title']; ?>
                                 <?php
-                                if($row["Active"] == "Complete"){
-                                     echo "✅";
+                                if ($row['Action'] == "Complete") {
+                                    echo "✅";
+                                }else{
+
                                 }
                                 ?>
-                                
-                                
                             </div>
                         </a>
                     <?php
@@ -153,7 +162,7 @@ $value = intval($row['all_condition']);
     <div class="container mt-4 mb-4">
         <div class="row">
             <div class="col">
-                <?php  
+                <?php
                 $database = new Database();
                 $conn = $database->getDB();
                 $query = "SELECT 
