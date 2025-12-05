@@ -131,7 +131,7 @@ include __DIR__ . "/../include/header.php";
                     WHERE l.course_id = $course_id
                     ORDER BY l.id ASC";
                     $stmt = mysqli_query($conn, $query);
-                    while ($row = $stmt->fetch_assoc()) :                    
+                    while ($row = $stmt->fetch_assoc()) :
                     ?>
                         <a style="text-decoration:none; color:black;" href="View_Course.php?View_id=<?php echo $course_id ?>&lesson_id=<?php echo $row["lesson_id"] ?>">
                             <div class="playlist-item"
@@ -160,14 +160,29 @@ $database = new Database();
 $conn = $database->getDB();
 $View_id = $_GET['View_id'];
 $query = "SELECT COUNT(*) FROM user_progress WHERE Action = 'Complete' AND course_id = $View_id ";
-$query_CASE = "SELECT CASE WHEN NOT EXISTS (SELECT 1 FROM user_progress WHERE NOT Action = 'Complete'
- AND course_id = $View_id )THEN 1 ELSE 0 END AS all_condition; ";
+$query_CASE = "SELECT
+    CASE 
+        WHEN (
+            SELECT COUNT(*) 
+            FROM lessons l
+            WHERE l.course_id =  $View_id 
+        ) = (
+            SELECT COUNT(*) 
+            FROM user_progress up
+            INNER JOIN lessons l ON up.lessons_id = l.id
+            WHERE l.course_id =  $View_id
+              AND up.action = 'complete'
+        )
+        THEN 1 
+        ELSE 0
+    END AS all_condition;
+";
 $stmt = mysqli_query($conn, $query_CASE);
 $row = $stmt->fetch_assoc();
 $value = intval($row['all_condition']);
 ?>
 
-<?php if ($value == 1) { ?>
+<?php if ($value == 1 ) { ?>
     <div class="container mt-4 mb-4">
         <div class="row">
             <div class="col">
